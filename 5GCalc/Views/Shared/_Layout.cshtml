@@ -1,0 +1,23 @@
+﻿@using System.Web.Optimization
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <!---<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/styles")
+    @Scripts.Render("~/scripts/shared")
+</head>
+<body>
+    <div class="checkered-border top"></div>
+    <div class="container">
+        <div id="renderbody">
+            <div id="renderbody-inner" class="inner-body">
+                @RenderBody()
+             </div>
+         </div>
+     </div>
+</body>
+</html>

@@ -1,0 +1,138 @@
+﻿@model _5GCalc.Models.Menu
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<script src="~/scripts/jquery-3.1.1.js"></script>
+
+<div class="container-fluid"><!--top-->
+    <div class="row"><!--top row-->
+        <div class="col-md-2">
+            <img src="@Url.Content("~/Content/images/logo.jpg")" alt="Five Guys Logo" />
+        </div>
+        
+        <style>
+            h1 {
+                color: #c82026;
+                font-family: "Helvetica Black","Arial Black","Helvetica", "Arial",sans-serif;
+            }
+        </style>
+    
+        <div class="col-md-10">
+            <h1>Five Guys <br />Nutrition Calculator</h1>
+        </div>
+    </div><!--top row-->
+</div><!--top-->
+
+<div class="container-fluid"><!--Nutrition and Menu-->
+    <div class="row">
+        <div class="col-md-6"><!--nutrition label-->
+            <hr />
+            <section class="performance-facts">
+                <header class="performance-facts__header">
+                    <h1 class="performance-facts__title">Nutrition Facts</h1>
+                    <p>
+                        Serving Details:
+                        <div id="yourSelection">Your Selection</div>
+                    </p>
+                    <hr style="margin-bottom:0px">
+                </header>
+                <table class="performance-facts__table">
+                    <tbody>
+                        <tr>
+                            <th style="text-align: left;" colspan="2">
+                                <div id="Calories">Calories: 0</div>
+                            </th>
+                        </tr>
+                        
+                        <tr>
+                            <th style="text-align: left;" colspan="2"> 
+                                <div id="Fat">Fat:0g</div>
+                            </th>
+                        </tr>
+                        
+                        <tr>
+                            <th style="text-align: left;" colspan="2">
+                                <div id="Sodium">Sodium: 0g</div>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th style="text-align: left;" colspan="2">
+                                <div id="Carbs">Total Carbs: 0g</div>
+                            </th>
+                        </tr>
+                        
+                        <tr>
+                            <th style="text-align: left;" colspan="2">
+                                <div id="Fiber">Fiber: 0g</div>
+                            </th>
+                        </tr>
+                        
+                        <tr>
+                            <th style="text-align: left;" colspan="2">
+                                <div id="Protein">Protein: 0g</div>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div><!--nutrition label-->
+
+       <div class="col-md-6 col"><!--menu options-->
+            <hr />
+            <div class="container-fluid">
+                <div class="panel-group" id="accordion">
+                    @{  
+                        foreach (var c in Model.Categories)
+                        {
+                            var collapseStyle = "collapse"; // firstsection ? "collapse in" : "collapse";
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#@c.Replace(' ', '_')">@c</a>
+                                    </h4>
+                                </div>
+                                <div id="@c.Replace(' ', '_')" class="panel-collapse @collapseStyle">
+                                    <div class="panel-body">
+                                        <table class="table table-hover clickable-row">
+                                            <thead>
+                                                <tr>
+                                                    <th>Item</th>
+                                                    <th>Cals</th>
+                                                    <th class="visible-lg">Fat</th>
+                                                    <th class="visible-lg">Sodium</th>
+                                                    <th class="hidden-xs">Carbs</th>
+                                                    <th class="visible-lg">Fiber</th>
+                                                    <th class="hidden-xs">Protein</th>
+                                                </tr>
+                                            </thead>
+                                                @{
+                                                    var items = Model.Items.Where(x => x.Section == c).ToList();
+                                                    foreach (var i in items)
+                                                    {
+                                                        var itemID = i.ItemName.Replace(' ', '_');
+                                                        itemID = itemID.Replace('.', '-');
+                                                        <tr id="row_@itemID">
+                                                            <td><input type="checkbox" id="cb_@itemID" onchange="checkboxChecker('#yourSelection')"/> 
+                                                            <a href="javascript:hyperlinkSelector('@itemID','#yourselection');" id="Link_@itemID">@i.ItemName</a></td>
+                                                            <td>@i.Calories</td>
+                                                            <td class="visible-lg">@i.TotalFat</td>
+                                                            <td class="visible-lg">@i.Sodium</td>
+                                                            <td class="hidden-xs">@i.Carbs</td>
+                                                            <td class="visible-lg">@i.Fiber</td>
+                                                            <td class="hidden-xs">@i.Protein</td>
+                                                        </tr>
+                                                    }
+                                                }
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                     }
+                    </div>
+                </div>
+        </div><!--menu options-->
+    </div><!--row-->
+</div><!--Nutrition and Menu-->

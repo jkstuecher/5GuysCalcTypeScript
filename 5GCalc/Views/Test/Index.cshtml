@@ -1,0 +1,22 @@
+﻿@using System.Web.Optimization
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Test Index</title>
+    @Styles.Render("~/Content/styles")
+    @Scripts.Render("~/scripts/shared")
+</head>
+<body>
+    <div id="list"></div>
+    <div> 
+        <script src="~/Scripts/jquery-3.1.1.js"></script>
+        <script src="/Scripts/test1.js"></script>
+    </div>
+</body>
+</html>
