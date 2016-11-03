@@ -25,7 +25,6 @@ function hyperlinkSelector(itemName, divToUpdate) {
         $('#cb_' + itemName).prop("checked", true);
     }
     checkboxChecker(divToUpdate);
-    console.log("fire!");
 }
 function GetSelectionTotals(selectedItems, divToUpdate) {
     var output = "<ul>";
