@@ -14,7 +14,6 @@ function checkboxChecker(divToUpdate : string) {
     //for each checkbox on page
     $('input[type=checkbox]').each(function () {
         itemToAdd = (this.checked ? this.id + ";" : ""); //if checked, itemToAdd is item name, else empty string
-        console.log(itemNameConverter(itemToAdd));
         sList += itemNameConverter(itemToAdd)
     });
     GetSelectionTotals(sList, divToUpdate);
@@ -44,7 +43,6 @@ function GetSelectionTotals(selectedItems: string, divToUpdate: string) {
     let selectedMenuItems: Menu;
 
     $.getJSON('../api/Menu/GetTotal', "selectionComplete=" + selectedItems, function (selectedMenuItem) {
-        console.log(selectedMenuItems);
         $('#Calories').html("Calories: " + selectedMenuItem.Calories);
         $('#Fat').html("Fat: " + selectedMenuItem.Fat + "g");
         $('#Sodium').html("Sodium: " + selectedMenuItem.Sodium + "g");
