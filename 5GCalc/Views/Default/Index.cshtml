@@ -2,9 +2,28 @@
 
 @{
     ViewBag.Title = "Index";
+    string basePath = string.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Url.Authority, Url.Content("~"));
 }
 
 <script src="~/scripts/jquery-3.1.1.js"></script>
+
+<!-- GoStats JavaScript Based Code -->
+<script type="text/javascript" src="http://gostats.com/js/counter.js">
+</script>
+<script type="text/javascript">
+		_gos='c3.gostats.com';
+		_goa=362887;
+		_got=5;
+		_goi=1;
+		_gol='web site traffic analysis';
+		_GoStatsRun();
+</script>
+<noscript>
+    <a target="_blank" title="web site traffic analysis" href="http://gostats.com">
+        <img alt="web site traffic analysis" src="http://c3.gostats.com/bin/count/a_362887/t_5/i_1/counter.png" style="border-width:0" />
+    </a>
+</noscript>
+<!-- End GoStats JavaScript Based Code -->
 
 <div class="container-fluid"><!--top-->
     <div class="row"><!--top row-->
@@ -114,8 +133,8 @@
                                                         var itemID = i.ItemName.Replace(' ', '_');
                                                         itemID = itemID.Replace('.', '-');
                                                         <tr id="row_@itemID">
-                                                            <td><input type="checkbox" id="cb_@itemID" onchange="checkboxChecker('#yourSelection')"/> 
-                                                            <a href="javascript:hyperlinkSelector('@itemID','#yourSelection');" id="Link_@itemID">@i.ItemName</a></td>
+                                                            <td><input type="checkbox" id="cb_@itemID" onchange="checkboxChecker('#yourSelection', '@basePath')"/> 
+                                                            <a href="javascript:hyperlinkSelector('@itemID','#yourSelection', '@basePath');" id="Link_@itemID">@i.ItemName</a></td>
                                                             <td>@i.Calories</td>
                                                             <td class="visible-lg">@i.TotalFat</td>
                                                             <td class="visible-lg">@i.Sodium</td>

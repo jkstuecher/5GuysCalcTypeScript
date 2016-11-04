@@ -1,4 +1,5 @@
 /// <reference path="typings/jquery/jquery.d.ts" />
+//takes html item name, and turns it into an item name ex: cb_A-1-_Steak_Sauce -> A.1. Steak Sauce
 function itemNameConverter(itemName) {
     var returnName;
     itemName = itemName.replace('cb_', ''); //replace cp_prefix
@@ -6,7 +7,8 @@ function itemNameConverter(itemName) {
     itemName = itemName.replace(/\-/g, '.'); //replace - with period
     return itemName;
 }
-function checkboxChecker(divToUpdate) {
+//checks every checkbox, and if checked, updates selection
+function checkboxChecker(divToUpdate, basePath) {
     var sList = ""; //will hold list of checked item names
     var itemToAdd = ""; //will hold the individual item to add
     //for each checkbox on page
@@ -14,9 +16,10 @@ function checkboxChecker(divToUpdate) {
         itemToAdd = (this.checked ? this.id + ";" : ""); //if checked, itemToAdd is item name, else empty string
         sList += itemNameConverter(itemToAdd);
     });
-    GetSelectionTotals(sList, divToUpdate);
+    GetSelectionTotals(sList, divToUpdate, basePath);
 }
-function hyperlinkSelector(itemName, divToUpdate) {
+//if hyperlink is clicked, corresponding checkbox is checked
+function hyperlinkSelector(itemName, divToUpdate, basePath) {
     var element = document.getElementById('cb_' + itemName);
     if (element.checked) {
         $('#cb_' + itemName).prop("checked", false);
@@ -24,9 +27,9 @@ function hyperlinkSelector(itemName, divToUpdate) {
     else {
         $('#cb_' + itemName).prop("checked", true);
     }
-    checkboxChecker(divToUpdate);
+    checkboxChecker(divToUpdate, basePath);
 }
-function GetSelectionTotals(selectedItems, divToUpdate) {
+function GetSelectionTotals(selectedItems, divToUpdate, basePath) {
     var output = "<ul>";
     var itemSplit = selectedItems.split(';');
     itemSplit.forEach(function (element) {
@@ -37,7 +40,7 @@ function GetSelectionTotals(selectedItems, divToUpdate) {
     output += "</ul>";
     $(divToUpdate).html(output);
     var selectedMenuItems;
-    $.getJSON('../api/Menu/GetTotal', "selectionComplete=" + selectedItems, function (selectedMenuItem) {
+    $.getJSON(basePath + '/api/Menu/GetTotal', "selectionComplete=" + selectedItems, function (selectedMenuItem) {
         $('#Calories').html("Calories: " + selectedMenuItem.Calories);
         $('#Fat').html("Fat: " + selectedMenuItem.Fat + "g");
         $('#Sodium').html("Sodium: " + selectedMenuItem.Sodium + "g");
@@ -46,3 +49,4 @@ function GetSelectionTotals(selectedItems, divToUpdate) {
         $('#Protein').html("Protein: " + selectedMenuItem.Protein + "g");
     });
 }
+//# sourceMappingURL=default_index.js.map

@@ -1,5 +1,6 @@
 ﻿/// <reference path="typings/jquery/jquery.d.ts" />
 
+//takes html item name, and turns it into an item name ex: cb_A-1-_Steak_Sauce -> A.1. Steak Sauce
 function itemNameConverter(itemName: string) {
     let returnName: string;
     itemName = itemName.replace('cb_', ''); //replace cp_prefix
@@ -8,7 +9,8 @@ function itemNameConverter(itemName: string) {
     return itemName;
 }
 
-function checkboxChecker(divToUpdate : string) {
+//checks every checkbox, and if checked, updates selection
+function checkboxChecker(divToUpdate : string, basePath : string) {
     var sList = ""; //will hold list of checked item names
     var itemToAdd = ""; //will hold the individual item to add
     //for each checkbox on page
@@ -16,19 +18,20 @@ function checkboxChecker(divToUpdate : string) {
         itemToAdd = (this.checked ? this.id + ";" : ""); //if checked, itemToAdd is item name, else empty string
         sList += itemNameConverter(itemToAdd)
     });
-    GetSelectionTotals(sList, divToUpdate);
+    GetSelectionTotals(sList, divToUpdate, basePath);
 }
 
-function hyperlinkSelector(itemName: string, divToUpdate: string) {
-
+//if hyperlink is clicked, corresponding checkbox is checked
+function hyperlinkSelector(itemName: string, divToUpdate: string, basePath : string) {
     var element = <HTMLInputElement>document.getElementById('cb_'+itemName);
-    if (element.checked)
+    if (element.checked) //toggle the checkbox
     { $('#cb_' + itemName).prop("checked", false); }
     else { $('#cb_' + itemName).prop("checked", true); }
-    checkboxChecker(divToUpdate);
+    checkboxChecker(divToUpdate, basePath);
 }
 
-function GetSelectionTotals(selectedItems: string, divToUpdate: string) {
+
+function GetSelectionTotals(selectedItems: string, divToUpdate: string, basePath : string) {
 
     var output = "<ul>";
     var itemSplit = selectedItems.split(';');
@@ -41,7 +44,7 @@ function GetSelectionTotals(selectedItems: string, divToUpdate: string) {
     $(divToUpdate).html(output);
     let selectedMenuItems: Menu;
 
-    $.getJSON('../api/Menu/GetTotal', "selectionComplete=" + selectedItems, function (selectedMenuItem) {
+    $.getJSON(basePath+'/api/Menu/GetTotal', "selectionComplete=" + selectedItems, function (selectedMenuItem) {
         $('#Calories').html("Calories: " + selectedMenuItem.Calories);
         $('#Fat').html("Fat: " + selectedMenuItem.Fat + "g");
         $('#Sodium').html("Sodium: " + selectedMenuItem.Sodium + "g");
