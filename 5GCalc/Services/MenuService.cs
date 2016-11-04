@@ -43,7 +43,7 @@ namespace _5GCalc.Services
             }
 
             returnMenu.Items = menuList;
-            returnMenu.Categories = menuSections;
+            returnMenu.Sections = menuSections;
 
             return returnMenu;
         }

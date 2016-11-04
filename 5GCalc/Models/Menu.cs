@@ -9,11 +9,7 @@ namespace _5GCalc.Models
     {
         public List<MenuItem> Items { get; set; }
 
-        public List<string> Categories { get; set; }
-
-        public MenuItem Total { get; set; }
-
-        public List<string> SelectedItems { get; set; }
+        public List<string> Sections { get; set; }
 
     }
 }
