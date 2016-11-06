@@ -41,6 +41,12 @@ function GetSelectionTotals(selectedItems: string, divToUpdate: string, basePath
         }
     });
     output += "</ul>";
+    if (itemSplit.length > 1) {
+        console.log(itemSplit.length);
+        output += (`<a href="javascript:ResetSelection('${divToUpdate}','${basePath}')">Reset Your Selection</a>`);
+    } else {
+        output = "Your Selection";
+    }
     $(divToUpdate).html(output);
     let selectedMenuItems: Menu;
 
@@ -52,4 +58,11 @@ function GetSelectionTotals(selectedItems: string, divToUpdate: string, basePath
         $('#Fiber').html("Fiber: " + selectedMenuItem.Fiber + "g");
         $('#Protein').html("Protein: " + selectedMenuItem.Protein + "g");
     });
+}
+
+function ResetSelection(divToUpdate: string, basePath: string) {
+    $('input[type=checkbox]').each(function () {
+        this.checked = false;
+    });
+    checkboxChecker(divToUpdate, basePath);
 }

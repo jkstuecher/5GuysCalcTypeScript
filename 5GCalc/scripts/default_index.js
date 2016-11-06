@@ -38,6 +38,13 @@ function GetSelectionTotals(selectedItems, divToUpdate, basePath) {
         }
     });
     output += "</ul>";
+    if (itemSplit.length > 1) {
+        console.log(itemSplit.length);
+        output += ("<a href=\"javascript:ResetSelection('" + divToUpdate + "','" + basePath + "')\">Reset Your Selection</a>");
+    }
+    else {
+        output = "Your Selection";
+    }
     $(divToUpdate).html(output);
     var selectedMenuItems;
     $.getJSON(basePath + '/api/Menu/GetTotal', "selectionComplete=" + selectedItems, function (selectedMenuItem) {
@@ -49,4 +56,9 @@ function GetSelectionTotals(selectedItems, divToUpdate, basePath) {
         $('#Protein').html("Protein: " + selectedMenuItem.Protein + "g");
     });
 }
-//# sourceMappingURL=default_index.js.map
+function ResetSelection(divToUpdate, basePath) {
+    $('input[type=checkbox]').each(function () {
+        this.checked = false;
+    });
+    checkboxChecker(divToUpdate, basePath);
+}
