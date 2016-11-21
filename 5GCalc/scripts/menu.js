@@ -47,3 +47,4 @@ function Output(downloadedMenu) {
     document.close(); //stopped the page from loading
 }
 GetJSONInfo();
+//# sourceMappingURL=menu.js.map
