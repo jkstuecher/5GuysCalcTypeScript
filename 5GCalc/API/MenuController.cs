@@ -14,12 +14,6 @@ namespace _5GCalc.API
             return Services.MenuService.GetMenu();
         }
 
-        [HttpGet]
-        public int DoubleThis(int x)
-        {
-            return x * 2;
-        }
-
         public Models.SelectionTotals GetTotal(string selectionComplete)
         {
             selectionComplete = selectionComplete ?? "";
